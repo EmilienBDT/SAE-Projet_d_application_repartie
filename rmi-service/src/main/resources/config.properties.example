@@ -1,0 +1,6 @@
+db.url=jdbc:oracle:thin:@charlemagne.iutnc.univ-lorraine.fr:1521:infodb
+db.user=
+db.password=
+rmi.registry.port=1099
+rmi.service.name=RestaurantService
+rmi.server.ip=localhost
