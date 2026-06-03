@@ -29,3 +29,5 @@ cp src/main/resources/config.properties out/
 java -cp "out:lib/*" fr.iutnc.rmi.server.RMIServer
 java -cp "out:lib/*" fr.iutnc.rmi.client.RMIClientTest
 ```
+
+// \http-proxy> mvn clean compile exec:java

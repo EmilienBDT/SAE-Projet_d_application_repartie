@@ -1,6 +1,6 @@
-fr\iutnc\rmi\dao\DatabaseManager.class
 fr\iutnc\rmi\client\RMIClientTest.class
 fr\iutnc\rmi\utils\ConfigLoader.class
+fr\iutnc\rmi\dao\DatabaseManager.class
 fr\iutnc\rmi\core\RestaurantService.class
 fr\iutnc\rmi\impl\RestaurantServiceImpl.class
 fr\iutnc\rmi\server\RMIServer.class
