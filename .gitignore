@@ -1,4 +1,5 @@
 *.class
+.vscode/
 out/
 target/
 config.properties
