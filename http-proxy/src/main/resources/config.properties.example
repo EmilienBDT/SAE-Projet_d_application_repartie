@@ -1,0 +1,5 @@
+api.url=https://carto.g-ny.eu/data/cifs/cifs_waze_v2.json
+proxy.port=8080
+rmi.registry.port=1099
+rmi.service.name=RestaurantService
+rmi.server.ip=localhost

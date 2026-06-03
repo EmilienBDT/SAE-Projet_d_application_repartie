@@ -12,26 +12,19 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-// \http-proxy> mvn clean compile exec:java
-
 public class DataFetcher {
     
     // à changer pour plus tard
-    private static final String API_URL = "https://carto.g-ny.eu/data/cifs/cifs_waze_v2.json"; 
+    private static final String API_URL = ConfigLoader.get("api.url"); 
 
-    public static void fetchDonnees() {
-        
-
-        
-
+    public static void fetchDonnees() {        
         // Configuration du proxy
         ProxySelector proxyIut = ProxySelector.of(new InetSocketAddress("www-cache", 3128));
-        
         
         // Création du client HTTP avec le proxy intégré
         HttpClient client ;
 
-        // on applique le proxy si il est damndé (machine IUT): mvn clean compile exec:java -Dexec.args="-DuseProxy=true"
+        // on applique le proxy s'il est demandé (machine IUT): mvn clean compile exec:java -Dexec.args="-DuseProxy=true"
         String useProxy = System.getProperty("useProxy");
 
         if ("true".equals(useProxy)) { 
