@@ -1,8 +1,4 @@
-package fr.iutnc.rmi.server;
-
-import fr.iutnc.rmi.core.RestaurantService;
-import fr.iutnc.rmi.impl.RestaurantServiceImpl;
-import fr.iutnc.rmi.utils.ConfigLoader;
+package fr.iutnc.rmi;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;

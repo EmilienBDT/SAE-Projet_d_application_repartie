@@ -1,7 +1,5 @@
-package fr.iutnc.rmi.impl;
+package fr.iutnc.rmi;
 
-import fr.iutnc.rmi.core.RestaurantService;
-import fr.iutnc.rmi.dao.DatabaseManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

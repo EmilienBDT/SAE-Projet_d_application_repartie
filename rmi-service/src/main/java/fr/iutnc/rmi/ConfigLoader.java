@@ -1,4 +1,4 @@
-package fr.iutnc.rmi.utils;
+package fr.iutnc.rmi;
 
 import java.io.InputStream;
 import java.util.Properties;

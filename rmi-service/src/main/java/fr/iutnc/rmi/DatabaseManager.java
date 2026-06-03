@@ -1,6 +1,5 @@
-package fr.iutnc.rmi.dao;
+package fr.iutnc.rmi;
 
-import fr.iutnc.rmi.utils.ConfigLoader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
