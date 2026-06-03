@@ -6,7 +6,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// 3. URLs des API de Nancy (GBFS v2)
+// URLs des API de Nancy 
 // Note pour la suite : Plus tard, remplacerer ces URLs par l'adresse 
 // du proxy Java (ex: 'http://localhost:8080/api/velib')
 const URL_INFO = "https://api.cyclocity.fr/contracts/nancy/gbfs/v2/station_information.json";
