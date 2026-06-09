@@ -33,6 +33,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>fr.iutnc.proxy.ProxyServer</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

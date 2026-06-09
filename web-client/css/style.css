@@ -1,0 +1,104 @@
+/* Design Global */
+body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+    background-color: #ffffff; 
+    color: #000000; 
+}
+/* Navigation */
+.navbar { 
+    display: flex; 
+    justify-content: center; 
+    padding: 25px 0; 
+    border-bottom: 1px solid #eaeaea; 
+    background-color: #ffffff; 
+    position: relative;
+    z-index: 1000;
+}
+.navbar button { 
+    background: none; 
+    border: none; 
+    font-size: 13px; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    margin: 0 25px; 
+    padding: 5px 0; 
+    cursor: pointer; 
+    color: #999999; 
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+.navbar button:hover { color: #000000; }
+.navbar button.active { 
+    color: #000000; 
+    border-bottom: 1px solid #000000; 
+}
+/* Conteneurs */
+.tabcontent { display: none; height: calc(100vh - 75px); }
+#map-tab { display: block; }
+#map { width: 100%; height: 100%; z-index: 1; }
+/* Compte Rendu */
+#compte-rendu { 
+    padding: 60px 20px; 
+    max-width: 800px; 
+    margin: 0 auto; 
+    line-height: 1.8; 
+    overflow-y: auto;
+}
+h2 { 
+    font-weight: 300; 
+    letter-spacing: 1px; 
+    text-transform: uppercase; 
+    margin-top: 50px;
+    margin-bottom: 30px; 
+    border-bottom: 1px solid #000000; 
+    padding-bottom: 15px; 
+    font-size: 18px;
+}
+p, li { color: #333333; font-size: 15px; }
+.schema-container {
+    width: 100%;
+    padding: 40px 0;
+    text-align: center;
+    background-color: #fafafa;
+    border: 1px solid #eaeaea;
+    margin: 30px 0;
+}
+/* Personnalisation des Popups Leaflet */
+.leaflet-popup-content-wrapper { 
+    border-radius: 0; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+    padding: 10px;
+}
+.popup-station h3 { 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    font-weight: 500; 
+    font-size: 14px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 10px;
+}
+.popup-station input { 
+    border: 1px solid #e0e0e0; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    width: calc(100% - 22px); 
+    font-family: inherit; 
+    font-size: 13px;
+}
+.popup-station button { 
+    background-color: #000000; 
+    color: #ffffff; 
+    border: none; 
+    padding: 12px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    cursor: pointer; 
+    width: 100%; 
+    font-size: 11px;
+    transition: background-color 0.3s; 
+    margin-top: 10px;
+}
+.popup-station button:hover { background-color: #444444; }

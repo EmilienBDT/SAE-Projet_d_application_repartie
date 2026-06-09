@@ -6,19 +6,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// URLs des API de Nancy 
-// Note pour la suite : Plus tard, remplacerer ces URLs par l'adresse 
-const PROXY_URL = "http://localhost:8080/api";
-const URL_INFO = "https://api.cyclocity.fr/contracts/nancy/gbfs/v2/station_information.json";
-const URL_STATUS = "https://api.cyclocity.fr/contracts/nancy/gbfs/v2/station_status.json";
-
 // Récupération et fusion des données
 async function chargerStations() {
     try {
         // téléchargement des fichiers
         const [reponseInfo, reponseStatus] = await Promise.all([
-            fetch(URL_INFO),
-            fetch(URL_STATUS)
+            fetch(CONFIG.URL_INFO),
+            fetch(CONFIG.URL_STATUS)
         ]);
 
         const dataInfo = await reponseInfo.json();
@@ -33,8 +27,8 @@ async function chargerStations() {
         // Boucle sur chaque station pour créer les marqueurs
         stationsInfos.forEach(info => {
             const status = statusMap.get(info.station_id);
-
             if (status) {
+                // Ajout sur la carte
                 const adresse = info.name;
                 const velosDispo = status.num_bikes_available;
                 const placesLibres = status.num_docks_available;
@@ -62,16 +56,13 @@ async function chargerStations() {
 // Chargement des Incidents Waze via Proxy
 async function chargerIncidents() {
     try {
-
-        // à modifier
-        const reponse = await fetch(`${PROXY_URL}/incidents`);
+        const reponse = await fetch(`${CONFIG.PROXY_URL}/incidents`);
         const data = await reponse.json();
 
-        data.incidents.forEach(incident => {
-            // Waze fournit souvent les coordonnées sous forme de ligne 
+        data.incidents.forEach(incident => { 
             const coords = incident.location.polyline.split(" ");
-            const lon = parseFloat(coords[0]);
-            const lat = parseFloat(coords[1]);
+            const lat = parseFloat(coords[0]);
+            const lon = parseFloat(coords[1]);
 
             // Icône orange pour différencier les travaux
             const incidentIcon = L.icon({
@@ -85,12 +76,10 @@ async function chargerIncidents() {
     } catch (erreur) { console.error("Erreur Waze :", erreur); }
 }
 
-
 // Chargement des Restaurants via Proxy
-
 async function chargerRestaurants() {
     try {
-        const reponse = await fetch(`${PROXY_URL}/restaurants`);
+        const reponse = await fetch(`${CONFIG.PROXY_URL}/restaurants`);
         const restaurants = await reponse.json();
 
         restaurants.forEach(resto => {
@@ -131,7 +120,7 @@ async function reserver(id) {
     };
 
     try {
-        const reponse = await fetch(`${PROXY_URL}/reserver`, {
+        const reponse = await fetch(`${CONFIG.PROXY_URL}/reserver`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -146,9 +135,7 @@ async function reserver(id) {
     }
 }
 
-
 // Lancement du chargement des données au démarrage
-
 chargerStations();
 chargerIncidents();
 chargerRestaurants();

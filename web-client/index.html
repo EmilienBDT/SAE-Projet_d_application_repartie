@@ -3,23 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carte Vélos Nancy</title>
-    <!-- Styles Leaflet -->
+    <title>Application Répartie - Nancy</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        body { margin: 0; padding: 0; }
-        #map { width: 100vw; height: 100vh; }
-        .popup-station h3 { margin: 0 0 5px 0; font-size: 16px; color: #333; }
-        .popup-station p { margin: 3px 0; font-size: 14px; }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="navbar">
+        <button class="tablinks active" onclick="openTab(event, 'map-tab')">Carte Interactive</button>
+        <button class="tablinks" onclick="openTab(event, 'compte-rendu')">Compte Rendu</button>
+    </div>
+    
+    <div id="map-tab" class="tabcontent">
+        <div id="map"></div>
+    </div>
 
-    <!-- Élément HTML contenant la carte -->
-    <div id="map"></div>
+    <div id="compte-rendu" class="tabcontent">
+        <h2>1. Architecture de l'application</h2>
+        <div class="schema-container">
+            <p style="color: #999;">[Insérer l'image du schéma d'architecture ici]</p>
+        </div>
 
-    <!-- Scripts Leaflet et application -->
+        <h2>2. Travail réalisé</h2>
+        <ul>
+            <li>Implémentation de la base de données Oracle sur le serveur Charlemagne.</li>
+            <li>Conception du service RMI Java exposant les données de restauration au format JSON.</li>
+            <li>Mise en place d'un Proxy HTTP agissant comme passerelle réseau et résolvant les politiques CORS du navigateur pour l'API Waze.</li>
+            <li>Développement de l'interface client Leaflet intégrant de manière asynchrone les flux de données ouverts et bloqués.</li>
+        </ul>
+
+        <h2>3. Déploiement et Exécution</h2>
+        <p>Les instructions détaillées de compilation (Maven / JDK) et d'exécution sur les environnements Windows et Ubuntu sont documentées dans le fichier README du projet.</p>
+
+        <h2>4. Code Source</h2>
+        <p>L'intégralité du code source est accessible sur notre dépôt : <a href="#" style="color: #000;">Lien vers le dépôt Git</a></p>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/app.js"></script>
+    <script>
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            
+            // Masquer tous les contenus
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            
+            // Retirer la classe active des boutons
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            
+            // Afficher l'onglet sélectionné
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+            
+            // Rafraîchissement obligatoire de Leaflet lors du retour sur l'onglet
+            if(tabName === 'map-tab') {
+                setTimeout(() => { map.invalidateSize(); }, 100);
+            }
+        }
+    </script>
 </body>
 </html>

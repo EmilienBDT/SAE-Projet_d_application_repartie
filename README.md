@@ -4,6 +4,17 @@
 - BODAT Emilien
 - DI RENZO VILLER Aurélio
 
+## Projet
+
+### Avec Maven
+```bash
+mvn clean compile
+# Lancer le service RMI
+mvn exec:java -pl rmi-service
+# Lancer le proxy
+mvn exec:java -pl http-proxy
+```
+
 ## HTTP-Proxy
 Terminal dans dossier http-proxy :
 
