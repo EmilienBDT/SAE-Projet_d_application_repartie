@@ -13,26 +13,26 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class DataFetcher {
-    
-    // à changer pour plus tard
-    private static final String API_URL = ConfigLoader.get("api.url"); 
 
-    public static void fetchDonnees() {        
+    private static final String API_URL = ConfigLoader.get("api.url");
+
+    public static void fetchDonnees() {
         // Configuration du proxy
         ProxySelector proxyIut = ProxySelector.of(new InetSocketAddress("www-cache", 3128));
-        
-        // Création du client HTTP avec le proxy intégré
-        HttpClient client ;
 
-        // on applique le proxy s'il est demandé (machine IUT): mvn clean compile exec:java -Dexec.args="-DuseProxy=true"
+        // Création du client HTTP avec le proxy intégré
+        HttpClient client;
+
+        // on applique le proxy s'il est demandé (machine IUT): mvn clean compile
+        // exec:java -Dexec.args="-DuseProxy=true"
         String useProxy = System.getProperty("useProxy");
 
-        if ("true".equals(useProxy)) { 
+        if ("true".equals(useProxy)) {
             client = HttpClient.newBuilder().proxy(proxyIut)
-                .build();
+                    .build();
         } else {
             client = HttpClient.newBuilder()
-                .build();
+                    .build();
         }
 
         // Préparation de la requête GET
@@ -42,16 +42,16 @@ public class DataFetcher {
                 .build();
 
         try {
-            // Envoi de la requête synchrone 
+            // Envoi de la requête synchrone
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // Test de la réception 
+            // Test de la réception
             if (response.statusCode() == 200) {
                 System.out.println("Données téléchargées avec succès");
-                
+
                 String jsonBody = response.body();
-                
-                // Test du format des données en tentant de les parser 
+
+                // Test du format des données en tentant de les parser
                 try {
                     JSONObject root = new JSONObject(jsonBody);
                     JSONArray incidents = root.getJSONArray("incidents");
@@ -60,8 +60,7 @@ public class DataFetcher {
                         JSONObject item = incidents.getJSONObject(i);
                         System.out.println("Description : " + item.getString("short_description"));
                     }
-                   
-                    
+
                 } catch (JSONException e) {
                     System.err.println("Erreur : Le contenu reçu n'est pas un JSON valide.");
                     e.printStackTrace();
@@ -72,7 +71,7 @@ public class DataFetcher {
             }
 
         } catch (IOException | InterruptedException e) {
-            // Gestion des erreurs du réseau 
+            // Gestion des erreurs du réseau
             System.err.println("Erreur réseau lors de la tentative de connexion :");
             e.printStackTrace();
         }

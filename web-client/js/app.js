@@ -1,5 +1,5 @@
 // Initialisation de la carte [Latitude, Longitude]
-const map = L.map('map', {zoomControl: false}).setView([48.6921, 6.1844], 14);
+const map = L.map('map', { zoomControl: false }).setView([48.6921, 6.1844], 14);
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
 // Ajout du fond de carte OpenStreetMap
@@ -42,7 +42,7 @@ function render() {
     layers.incidents.clearLayers();
 
     const searchLower = state.search.toLowerCase();
-    
+
     const showRestaurants = (state.filter === null || state.filter === 'restaurants');
     const showVelos = (state.filter === null || state.filter === 'velos');
     const showIncidents = (state.filter === null || state.filter === 'incidents');
@@ -54,7 +54,7 @@ function render() {
         state.data.restaurants.forEach(resto => {
             if (resto.nom.toLowerCase().includes(searchLower) || resto.adresse.toLowerCase().includes(searchLower)) {
                 resultatsTrouves++;
-                
+
                 const marker = L.marker([resto.coordonnees.lat, resto.coordonnees.lng], { icon: icons.restaurant });
                 const formHTML = `
                     <div id="view_${resto.id}" class="popup-station">
@@ -164,40 +164,39 @@ function render() {
 }
 
 // Actions UI
-window.toggleFilter = function(category) {
+window.toggleFilter = function (category) {
     if (state.filter === category) {
         state.filter = null;
     } else {
         state.filter = category;
     }
-    
+
     document.querySelectorAll('.filter-toggle').forEach(el => el.classList.remove('active'));
     if (state.filter) {
         document.getElementById('toggle-' + category).classList.add('active');
     }
-    
+
     render();
 };
 
-window.handleSearch = function(event) {
+window.handleSearch = function (event) {
     state.search = event.target.value;
     render();
 };
 
-window.focusOnMap = function(lat, lng, layerName) {
+window.focusOnMap = function (lat, lng, layerName) {
     map.setView([lat, lng], 16);
     layers[layerName].eachLayer(function (marker) {
         if (marker.getLatLng().lat === lat && marker.getLatLng().lng === lng) {
             marker.openPopup();
-            
-            // Si c'est un restaurant, s'assurer que la vue par défaut est affichée à l'ouverture
-            if(layerName === 'restaurants') {
+
+            if (layerName === 'restaurants') {
                 const id = marker._popup._content.match(/view_(\d+)/);
-                if(id && id[1]) {
+                if (id && id[1]) {
                     setTimeout(() => {
                         const viewEl = document.getElementById(`view_${id[1]}`);
                         const formEl = document.getElementById(`form_${id[1]}`);
-                        if(viewEl && formEl) {
+                        if (viewEl && formEl) {
                             viewEl.style.display = 'block';
                             formEl.style.display = 'none';
                         }
@@ -237,7 +236,7 @@ async function chargerIncidents() {
     try {
         const reponse = await fetch(`${CONFIG.PROXY_URL}/incidents`);
         const data = await reponse.json();
-        state.data.incidents = data.incidents.map(incident => { 
+        state.data.incidents = data.incidents.map(incident => {
             const coords = incident.location.polyline.split(" ");
             return {
                 short_description: incident.short_description,
@@ -261,7 +260,7 @@ async function chargerRestaurants() {
 
 async function reserver(id) {
     const nbConvives = parseInt(document.getElementById(`convives_${id}`).value);
-    
+
     if (isNaN(nbConvives) || nbConvives < 1) {
         document.getElementById(`msg_${id}`).innerText = "Nombre de convives invalide.";
         document.getElementById(`msg_${id}`).style.color = "red";

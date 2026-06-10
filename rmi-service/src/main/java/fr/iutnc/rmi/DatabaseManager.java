@@ -10,10 +10,9 @@ public class DatabaseManager {
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             connection = DriverManager.getConnection(
-                ConfigLoader.get("db.url"),
-                ConfigLoader.get("db.user"),
-                ConfigLoader.get("db.password")
-            );
+                    ConfigLoader.get("db.url"),
+                    ConfigLoader.get("db.user"),
+                    ConfigLoader.get("db.password"));
         }
         return connection;
     }
