@@ -1,104 +1,343 @@
-/* Design Global */
-body { 
-    margin: 0; 
-    padding: 0; 
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
-    background-color: #ffffff; 
-    color: #000000; 
+/* =========================================
+   1. RESET & GÉNERAL
+   ========================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
-/* Navigation */
-.navbar { 
-    display: flex; 
-    justify-content: center; 
-    padding: 25px 0; 
-    border-bottom: 1px solid #eaeaea; 
-    background-color: #ffffff; 
+
+body, html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden; 
+    background-color: #fafafa;
+}
+
+/* =========================================
+   2. NAVIGATION & ONGLETS
+   ========================================= */
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background: #ffffff;
+    border-bottom: 1px solid #eaeaea;
     position: relative;
     z-index: 1000;
 }
-.navbar button { 
-    background: none; 
-    border: none; 
-    font-size: 13px; 
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-    margin: 0 25px; 
-    padding: 5px 0; 
-    cursor: pointer; 
-    color: #999999; 
-    transition: color 0.3s ease, border-bottom 0.3s ease;
-    border-bottom: 1px solid transparent;
-}
-.navbar button:hover { color: #000000; }
-.navbar button.active { 
-    color: #000000; 
-    border-bottom: 1px solid #000000; 
-}
-/* Conteneurs */
-.tabcontent { display: none; height: calc(100vh - 75px); }
-#map-tab { display: block; }
-#map { width: 100%; height: 100%; z-index: 1; }
-/* Compte Rendu */
-#compte-rendu { 
-    padding: 60px 20px; 
-    max-width: 800px; 
-    margin: 0 auto; 
-    line-height: 1.8; 
-    overflow-y: auto;
-}
-h2 { 
-    font-weight: 300; 
-    letter-spacing: 1px; 
-    text-transform: uppercase; 
-    margin-top: 50px;
-    margin-bottom: 30px; 
-    border-bottom: 1px solid #000000; 
-    padding-bottom: 15px; 
-    font-size: 18px;
-}
-p, li { color: #333333; font-size: 15px; }
-.schema-container {
-    width: 100%;
-    padding: 40px 0;
-    text-align: center;
-    background-color: #fafafa;
-    border: 1px solid #eaeaea;
-    margin: 30px 0;
-}
-/* Personnalisation des Popups Leaflet */
-.leaflet-popup-content-wrapper { 
-    border-radius: 0; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-    padding: 10px;
-}
-.popup-station h3 { 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    font-weight: 500; 
-    font-size: 14px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eaeaea;
-    padding-bottom: 10px;
-}
-.popup-station input { 
-    border: 1px solid #e0e0e0; 
-    padding: 10px; 
-    margin-bottom: 10px; 
-    width: calc(100% - 22px); 
-    font-family: inherit; 
+
+.navbar p {
+    position: absolute;
+    margin: 0;
     font-size: 13px;
+    color: #555555;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
-.popup-station button { 
-    background-color: #000000; 
-    color: #ffffff; 
-    border: none; 
-    padding: 12px; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    cursor: pointer; 
-    width: 100%; 
-    font-size: 11px;
-    transition: background-color 0.3s; 
-    margin-top: 10px;
+
+.navbar .noms {
+    left: 20px;
 }
-.popup-station button:hover { background-color: #444444; }
+
+.navbar .classe {
+    right: 20px;
+}
+
+.tablinks {
+    background: none;
+    border: none;
+    margin: 0 20px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    color: #888;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+    transition: color 0.2s;
+}
+
+.tablinks:hover {
+    color: #333;
+}
+
+.tablinks.active {
+    color: #000;
+    border-bottom: 2px solid #000;
+}
+
+.tabcontent {
+    height: calc(100vh - 60px);
+    width: 100%;
+    position: relative;
+}
+
+/* =========================================
+   3. CONTENU PRINCIPAL (CARTE & TEXTE)
+   ========================================= */
+#map {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+#compte-rendu {
+    padding: 40px;
+    overflow-y: auto;
+    background: #ffffff;
+}
+
+#compte-rendu h2 {
+    margin: 20px 0 10px 0;
+    font-weight: 500;
+}
+
+#compte-rendu ul, #compte-rendu p {
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   4. PANNEAU FLOTTANT & RECHERCHE
+   ========================================= */
+#floating-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: calc(100vh - 100px);
+    pointer-events: none;
+}
+
+.search-filter-box {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    pointer-events: auto;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.2s;
+    background-color: #f9fcff;
+}
+
+#search-input:focus {
+    border-color: #2A81CB;
+    background-color: #f0f8ff;
+    box-shadow: 0 0 8px rgba(42, 129, 203, 0.2);
+}
+
+/* =========================================
+   5. FILTRES (TOGGLES)
+   ========================================= */
+.filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    color: #666;
+}
+
+.separator {
+    margin: 0 10px;
+    color: rgba(0,0,0,0.08);
+}
+
+.filter-toggle {
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: all 0.2s;
+    border-radius: 4px;
+}
+
+.filter-toggle:hover {
+    color: #000;
+    background-color: rgba(0,0,0,0.03);
+}
+
+.filter-toggle.active {
+    font-weight: bold;
+    color: #000;
+    background-color: rgba(0,0,0,0.08);
+}
+
+#toggle-restaurants.active {
+    color: #2A81CB;
+    background-color: rgba(42, 129, 203, 0.15);
+}
+
+#toggle-velos.active {
+    color: #32A852;
+    background-color: rgba(50, 168, 82, 0.15);
+}
+
+#toggle-incidents.active {
+    color: #E08C1F;
+    background-color: rgba(224, 140, 31, 0.15);
+}
+
+/* =========================================
+   6. ZONE DE RÉSULTATS & CARTES
+   ========================================= */
+.results-box {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(5px);
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+    padding: 15px;
+    padding-right: 8px; /* Évite la superposition avec la scrollbar */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    pointer-events: auto;
+    
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Scrollbar personnalisée */
+.results-box::-webkit-scrollbar {
+    width: 6px;
+}
+.results-box::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 10px 0; 
+}
+.results-box::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+/* Structure d'une carte de résultat */
+.result-card {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 10px;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.result-card:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.result-card:hover {
+    background-color: #fcfcfc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.clickable-card {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.clickable-card:hover {
+    opacity: 0.7;
+}
+
+/* Typographie des cartes */
+.result-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: #222;
+}
+
+.result-address, 
+.result-desc {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+/* Couleurs spécifiques des titres selon la catégorie */
+.result-card.resto-card .result-title {
+    color: #2A81CB;
+}
+
+.result-card.velo-card .result-title {
+    color: #32A852;
+}
+
+.result-card.incident-card .result-title {
+    color: #E08C1F;
+}
+
+/* =========================================
+   7. BOUTONS
+   ========================================= */
+.btn-reserver {
+    background-color: #2A81CB; 
+    color: white;
+    border: none;
+    border-radius: 25px; 
+    padding: 8px 0;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-reserver:hover {
+    background-color: #1f639e;
+}
+
+/* =========================================
+   8. POPUPS LEAFLET
+   ========================================= */
+.popup-station {
+    font-family: inherit;
+}
+
+.popup-station h3 {
+    margin: 0 0 8px 0;
+    font-size: 15px;
+    color: #111;
+}
+
+.popup-station p {
+    margin: 4px 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.popup-station hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+}
+
+.popup-station input {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.popup-station input[type="number"] {
+    -moz-appearance: textfield;
+}

@@ -32,15 +32,15 @@ mvn exec:java "-Dexec.mainClass=fr.iutnc.proxy.ProxyServer"
 ```bash
 javac -cp "lib/*;../rmi-service/out" -d out src/main/java/fr/iutnc/proxy/*.java
 cp src/main/resources/config.properties out/
-java -cp "out;lib/*;../rmi-service/out" fr.iutnc.proxy.DataFetcher
-java -cp "out;lib/*;../rmi-service/out" fr.iutnc.proxy.ProxyServer
+java -DuseProxy=true -cp "out;lib/*;../rmi-service/out" fr.iutnc.proxy.DataFetcher
+java -DuseProxy=true -cp "out;lib/*;../rmi-service/out" fr.iutnc.proxy.ProxyServer
 ```
 - Ubuntu
 ```bash
 javac -cp "lib/*:../rmi-service/out" -d out src/main/java/fr/iutnc/proxy/*.java
 cp src/main/resources/config.properties out/
-java -cp "out:lib/*:../rmi-service/out" fr.iutnc.proxy.DataFetcher
-java -cp "out:lib/*:../rmi-service/out" fr.iutnc.proxy.ProxyServer
+java -DuseProxy=true -cp "out:lib/*:../rmi-service/out" fr.iutnc.proxy.DataFetcher
+java -DuseProxy=true -cp "out:lib/*:../rmi-service/out" fr.iutnc.proxy.ProxyServer
 ```
 
 ## RMI-Service

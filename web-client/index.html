@@ -9,15 +9,28 @@
 </head>
 <body>
     <div class="navbar">
+        <p class="noms">BODAT Emilien - DI RENZO VILLER Aurélio</p>
         <button class="tablinks active" onclick="openTab(event, 'map-tab')">Carte Interactive</button>
         <button class="tablinks" onclick="openTab(event, 'compte-rendu')">Compte Rendu</button>
-    </div>
-    
+        <p class="classe">S4RA-IL2</p>
+    </div>  
     <div id="map-tab" class="tabcontent">
+        <div id="floating-container">
+            <div class="search-filter-box">
+                <input type="text" id="search-input" placeholder="Rechercher..." onkeyup="handleSearch(event)">
+                <div class="filters">
+                    <span id="toggle-restaurants" class="filter-toggle" onclick="toggleFilter('restaurants')">Restaurants</span> <span class="separator">|</span> 
+                    <span id="toggle-velos" class="filter-toggle" onclick="toggleFilter('velos')">Vélos</span> <span class="separator">|</span> 
+                    <span id="toggle-incidents" class="filter-toggle" onclick="toggleFilter('incidents')">Incidents</span>
+                </div>
+            </div>
+            <div id="results-box" class="results-box">
+                </div>
+        </div>
         <div id="map"></div>
     </div>
 
-    <div id="compte-rendu" class="tabcontent">
+    <div id="compte-rendu" class="tabcontent" style="display:none;">
         <h2>1. Architecture de l'application</h2>
         <div class="schema-container">
             <p style="color: #999;">[Insérer l'image du schéma d'architecture ici]</p>
@@ -28,7 +41,7 @@
             <li>Implémentation de la base de données Oracle sur le serveur Charlemagne.</li>
             <li>Conception du service RMI Java exposant les données de restauration au format JSON.</li>
             <li>Mise en place d'un Proxy HTTP agissant comme passerelle réseau et résolvant les politiques CORS du navigateur pour l'API Waze.</li>
-            <li>Développement de l'interface client Leaflet intégrant de manière asynchrone les flux de données ouverts et bloqués.</li>
+            <li>Développement de l'interface client Leaflet intégrant de manière asynchrone les flux de données.</li>
         </ul>
 
         <h2>3. Déploiement et Exécution</h2>
@@ -45,23 +58,19 @@
         function openTab(evt, tabName) {
             let i, tabcontent, tablinks;
             
-            // Masquer tous les contenus
             tabcontent = document.getElementsByClassName("tabcontent");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
             }
             
-            // Retirer la classe active des boutons
             tablinks = document.getElementsByClassName("tablinks");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
             
-            // Afficher l'onglet sélectionné
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
             
-            // Rafraîchissement obligatoire de Leaflet lors du retour sur l'onglet
             if(tabName === 'map-tab') {
                 setTimeout(() => { map.invalidateSize(); }, 100);
             }
