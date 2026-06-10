@@ -286,7 +286,17 @@ async function reserver(id) {
         const resultat = await reponse.json();
         const msgElement = document.getElementById(`msg_${id}`);
         msgElement.innerText = resultat.message;
-        msgElement.style.color = resultat.status === "success" ? "green" : "red";
+        if (resultat.status === "success") {
+            msgElement.style.color = "green";
+            
+            document.getElementById(`nom_${id}`).value = "";
+            document.getElementById(`prenom_${id}`).value = "";
+            document.getElementById(`convives_${id}`).value = "";
+            document.getElementById(`tel_${id}`).value = "";
+            
+        } else {
+            msgElement.style.color = "red";
+        }
     } catch (erreur) {
         document.getElementById(`msg_${id}`).innerText = "Erreur de connexion";
         document.getElementById(`msg_${id}`).style.color = "red";
