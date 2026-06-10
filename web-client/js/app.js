@@ -81,7 +81,7 @@ function render() {
                             <div class="result-title">${resto.nom}</div>
                             <div class="result-address">${resto.adresse}</div>
                         </div>
-                        <button class="btn-reserver" onclick="focusOnMap(${resto.coordonnees.lat}, ${resto.coordonnees.lng}, 'restaurants')">Réserver</button>
+                        <button class="btn-reserver" onclick="focusOnMap(${resto.coordonnees.lat}, ${resto.coordonnees.lng}, 'restaurants'); setTimeout(() => { document.getElementById('view_${resto.id}').style.display='none'; document.getElementById('form_${resto.id}').style.display='block'; }, 100);">Réserver</button>
                     </div>
                 `;
             }
@@ -127,13 +127,22 @@ function render() {
             if (incident.short_description.toLowerCase().includes(searchLower) || incident.street.toLowerCase().includes(searchLower)) {
                 resultatsTrouves++;
 
+                // Formatage de la date ISO vers DD-MM-YYYY à HH:MM
+                const dateObj = new Date(incident.starttime);
+                const jour = String(dateObj.getDate()).padStart(2, '0');
+                const mois = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const annee = dateObj.getFullYear();
+                const heures = String(dateObj.getHours()).padStart(2, '0');
+                const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+                const dateFormatee = `${jour}/${mois}/${annee} à ${heures}:${minutes}`;
+
                 const marker = L.marker([incident.lat, incident.lon], { icon: icons.incident });
                 marker.bindPopup(`
                     <div class="popup-station">
                         <h3>${incident.short_description}</h3>
                         <p>${incident.street}</p>
                         <hr>
-                        <p><b>Début :</b> ${incident.starttime}</p>
+                        <p><b>Début :</b> ${dateFormatee}</p>
                     </div>
                 `);
                 layers.incidents.addLayer(marker);
@@ -142,7 +151,7 @@ function render() {
                     <div class="result-card incident-card clickable-card" onclick="focusOnMap(${incident.lat}, ${incident.lon}, 'incidents')">
                         <div class="result-title">${incident.short_description}</div>
                         <div class="result-address">${incident.street}</div>
-                        <div class="result-desc" style="font-size: 11px;"><b>Début : </b>${incident.starttime}</div>
+                        <div class="result-desc"><b>Début : </b>${dateFormatee}</div>
                     </div>
                 `;
             }
