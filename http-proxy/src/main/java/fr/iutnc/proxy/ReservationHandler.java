@@ -47,7 +47,7 @@ public class ReservationHandler implements HttpHandler {
 
             Registry registry = LocateRegistry.getRegistry(RMI_HOST, RMI_PORT);
             RestaurantService service = (RestaurantService) registry.lookup("RestaurantService");
-            
+
             responsePayload = service.reserverTable(restaurantId, nom, prenom, nbConvives, telephone);
 
         } catch (Exception e) {

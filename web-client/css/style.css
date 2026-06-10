@@ -1,6 +1,4 @@
-/* =========================================
-   1. GÉNERAL
-   ========================================= */
+/* GÉNERAL */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,16 +6,15 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-body, html {
+body,
+html {
     height: 100%;
     width: 100%;
-    overflow: hidden; 
+    overflow: hidden;
     background-color: #fafafa;
 }
 
-/* =========================================
-   2. NAVIGATION & ONGLETS
-   ========================================= */
+/* NAVIGATION & ONGLETS */
 .navbar {
     display: flex;
     justify-content: center;
@@ -74,9 +71,7 @@ body, html {
     position: relative;
 }
 
-/* =========================================
-   3. CONTENU PRINCIPAL (CARTE & TEXTE)
-   ========================================= */
+/* CONTENU PRINCIPAL (CARTE & TEXTE)*/
 #map {
     height: 100%;
     width: 100%;
@@ -94,15 +89,14 @@ body, html {
     font-weight: 500;
 }
 
-#compte-rendu ul, #compte-rendu p {
+#compte-rendu ul,
+#compte-rendu p {
     line-height: 1.6;
     color: #444;
     margin-bottom: 15px;
 }
 
-/* =========================================
-   4. PANNEAU FLOTTANT & RECHERCHE
-   ========================================= */
+/* PANNEAU FLOTTANT & RECHERCHE*/
 #floating-container {
     position: absolute;
     top: 20px;
@@ -122,7 +116,7 @@ body, html {
     border: 1px solid #eaeaea;
     border-radius: 16px;
     padding: 15px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     pointer-events: auto;
 }
 
@@ -144,9 +138,7 @@ body, html {
     box-shadow: 0 0 8px rgba(42, 129, 203, 0.2);
 }
 
-/* =========================================
-   5. FILTRES (TOGGLES)
-   ========================================= */
+/*  FILTRES (TOGGLES)*/
 .filters {
     display: flex;
     justify-content: center;
@@ -157,7 +149,7 @@ body, html {
 
 .separator {
     margin: 0 10px;
-    color: rgba(0,0,0,0.08);
+    color: rgba(0, 0, 0, 0.08);
 }
 
 .filter-toggle {
@@ -169,13 +161,13 @@ body, html {
 
 .filter-toggle:hover {
     color: #000;
-    background-color: rgba(0,0,0,0.03);
+    background-color: rgba(0, 0, 0, 0.03);
 }
 
 .filter-toggle.active {
     font-weight: bold;
     color: #000;
-    background-color: rgba(0,0,0,0.08);
+    background-color: rgba(0, 0, 0, 0.08);
 }
 
 #toggle-restaurants.active {
@@ -193,19 +185,17 @@ body, html {
     background-color: rgba(224, 140, 31, 0.15);
 }
 
-/* =========================================
-   6. ZONE DE RÉSULTATS & CARTES
-   ========================================= */
+/* ZONE DE RÉSULTATS & CARTES */
 .results-box {
     background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(5px);
     border: 1px solid #eaeaea;
     border-radius: 16px;
     padding: 15px;
-    padding-right: 8px; /* Évite la superposition avec la scrollbar */
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    padding-right: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     pointer-events: auto;
-    
+
     flex-grow: 1;
     overflow-y: auto;
     overflow-x: hidden;
@@ -218,10 +208,12 @@ body, html {
 .results-box::-webkit-scrollbar {
     width: 6px;
 }
+
 .results-box::-webkit-scrollbar-track {
     background: transparent;
-    margin: 10px 0; 
+    margin: 10px 0;
 }
+
 .results-box::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 3px;
@@ -243,7 +235,7 @@ body, html {
 
 .result-card:hover {
     background-color: #fcfcfc;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .clickable-card {
@@ -263,7 +255,7 @@ body, html {
     color: #222;
 }
 
-.result-address, 
+.result-address,
 .result-desc {
     font-size: 13px;
     color: #777;
@@ -284,14 +276,12 @@ body, html {
     color: #E08C1F;
 }
 
-/* =========================================
-   7. BOUTONS
-   ========================================= */
+/* BOUTONS */
 .btn-reserver {
-    background-color: #2A81CB; 
+    background-color: #2A81CB;
     color: white;
     border: none;
-    border-radius: 25px; 
+    border-radius: 25px;
     padding: 8px 0;
     width: 100%;
     font-size: 14px;
@@ -304,9 +294,7 @@ body, html {
     background-color: #1f639e;
 }
 
-/* =========================================
-   8. POPUPS LEAFLET
-   ========================================= */
+/* POPUPS LEAFLET */
 .popup-station {
     font-family: inherit;
 }

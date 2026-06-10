@@ -10,12 +10,12 @@ public class ProxyServer {
         try {
             int port = Integer.parseInt(ConfigLoader.get("proxy.port"));
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-            
+
             // Définition des routes de l'API
             server.createContext("/api/incidents", new IncidentHandler());
             server.createContext("/api/restaurants", new RestaurantHandler());
             server.createContext("/api/reserver", new ReservationHandler());
-            
+
             server.setExecutor(null);
             server.start();
             System.out.println("Proxy HTTP démarré et en écoute sur le port " + port);

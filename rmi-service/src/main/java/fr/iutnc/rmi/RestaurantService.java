@@ -3,21 +3,19 @@ package fr.iutnc.rmi;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-/**
- * Service distant permettant la gestion et la consultation des restaurants.
- */
+//Service distant permettant la gestion et la consultation des restaurants.
 public interface RestaurantService extends Remote {
     
     /**
      * Récupère la liste de tous les restaurants avec leurs coordonnées géographiques.
-     * * @return Une chaîne de caractères contenant un tableau JSON d'objets restaurant.
+     * @return Une chaîne de caractères contenant un tableau JSON d'objets restaurant.
      * @throws RemoteException En cas d'erreur de communication réseau ou de base de données.
      */
     String getRestaurants() throws RemoteException;
 
     /**
      * Enregistre une nouvelle réservation pour un restaurant spécifique.
-     * * @param restaurantId L'identifiant unique du restaurant.
+     * @param restaurantId L'identifiant unique du restaurant.
      * @param nom Le nom de famille de la personne réservant la table.
      * @param prenom Le prénom de la personne.
      * @param nbConvives Le nombre total de personnes attendues.

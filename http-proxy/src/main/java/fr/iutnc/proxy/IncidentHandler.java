@@ -17,7 +17,7 @@ public class IncidentHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        // En-têtes CORS obligatoires
+
         exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().add("Content-Type", "application/json; charset=UTF-8");
 
@@ -41,7 +41,7 @@ public class IncidentHandler implements HttpHandler {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            
+
             if (response.statusCode() == 200) {
                 responsePayload = response.body();
             } else {

@@ -8,7 +8,8 @@ public class ConfigLoader {
 
     static {
         try (InputStream input = ConfigLoader.class.getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) throw new RuntimeException("Fichier config.properties introuvable");
+            if (input == null)
+                throw new RuntimeException("Fichier config.properties introuvable");
             properties.load(input);
         } catch (Exception e) {
             e.printStackTrace();

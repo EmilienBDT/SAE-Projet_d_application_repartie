@@ -21,20 +21,20 @@ public class RestaurantServiceImpl extends UnicastRemoteObject implements Restau
         String query = "SELECT id, nom, adresse, latitude, longitude FROM restaurants";
 
         try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 JSONObject obj = new JSONObject();
                 obj.put("id", rs.getInt("id"));
                 obj.put("nom", rs.getString("nom"));
                 obj.put("adresse", rs.getString("adresse"));
-                
+
                 JSONObject coord = new JSONObject();
                 coord.put("lat", rs.getDouble("latitude"));
                 coord.put("lng", rs.getDouble("longitude"));
                 obj.put("coordonnees", coord);
-                
+
                 jsonArray.put(obj);
             }
         } catch (Exception e) {
@@ -45,19 +45,20 @@ public class RestaurantServiceImpl extends UnicastRemoteObject implements Restau
     }
 
     @Override
-    public String reserverTable(int restaurantId, String nom, String prenom, int nbConvives, String telephone) throws RemoteException {
+    public String reserverTable(int restaurantId, String nom, String prenom, int nbConvives, String telephone)
+            throws RemoteException {
         String query = "INSERT INTO reservations (id, restaurant_id, nom, prenom, nb_convives, telephone) VALUES (seq_reservations.NEXTVAL, ?, ?, ?, ?, ?)";
         JSONObject response = new JSONObject();
 
         try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
             stmt.setInt(1, restaurantId);
             stmt.setString(2, nom);
             stmt.setString(3, prenom);
             stmt.setInt(4, nbConvives);
             stmt.setString(5, telephone);
-            
+
             int rows = stmt.executeUpdate();
             if (rows > 0) {
                 response.put("status", "success");

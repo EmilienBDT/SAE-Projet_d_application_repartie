@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,29 +9,33 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="navbar">
         <p class="noms">BODAT Emilien - DI RENZO VILLER Aurélio</p>
         <button class="tablinks active" onclick="openTab(event, 'map-tab')">Carte Interactive</button>
         <button class="tablinks" onclick="openTab(event, 'compte-rendu')">Compte Rendu</button>
         <p class="classe">S4RA-IL2</p>
-    </div>  
+    </div>
     <div id="map-tab" class="tabcontent">
         <div id="floating-container">
             <div class="search-filter-box">
                 <input type="text" id="search-input" placeholder="Rechercher..." onkeyup="handleSearch(event)">
                 <div class="filters">
-                    <span id="toggle-restaurants" class="filter-toggle" onclick="toggleFilter('restaurants')">Restaurants</span> <span class="separator">|</span> 
-                    <span id="toggle-velos" class="filter-toggle" onclick="toggleFilter('velos')">Vélos</span> <span class="separator">|</span> 
-                    <span id="toggle-incidents" class="filter-toggle" onclick="toggleFilter('incidents')">Incidents</span>
+                    <span id="toggle-restaurants" class="filter-toggle"
+                        onclick="toggleFilter('restaurants')">Restaurants</span> <span class="separator">|</span>
+                    <span id="toggle-velos" class="filter-toggle" onclick="toggleFilter('velos')">Vélos</span> <span
+                        class="separator">|</span>
+                    <span id="toggle-incidents" class="filter-toggle"
+                        onclick="toggleFilter('incidents')">Incidents</span>
                 </div>
             </div>
             <div id="results-box" class="results-box">
-                </div>
+            </div>
         </div>
         <div id="map"></div>
     </div>
-<!-- Contrendu -->
+    <!-- Contrendu -->
     <div id="compte-rendu" class="tabcontent" style="display:none;">
         <h2>1. Architecture de l'application</h2>
         <div class="schema-container">
@@ -42,15 +47,19 @@
             <li>Création de la carte Leaflet et affichage des station velib à l'aide de l'api cyclocity</li>
             <li>Implémentation de la base de données Oracle sur webetu</li>
             <li>Conception du service RMI Java exposant les données de restauration au format JSON.</li>
-            <li>Mise en place d'un Proxy HTTP agissant comme passerelle réseau et résolvant les politiques CORS du navigateur pour l'API Waze.</li>
+            <li>Mise en place d'un Proxy HTTP agissant comme passerelle réseau et résolvant les politiques CORS du
+                navigateur pour l'API Waze.</li>
             <li>Développement de l'interface client Leaflet intégrant de manière asynchrone les flux de données.</li>
         </ul>
 
         <h2>3. Déploiement et Exécution</h2>
-        <p>Les instructions détaillées de compilation (Maven / JDK) et d'exécution sur les environnements Windows et Ubuntu sont documentées dans le fichier README du projet.</p>
+        <p>Les instructions détaillées de compilation (Maven / JDK) et d'exécution sur les environnements Windows et
+            Ubuntu sont documentées dans le fichier README du projet.</p>
 
         <h2>4. Code Source</h2>
-        <p>L'intégralité du code source est accessible sur notre dépôt : <a href="#https://github.com/EmilienBDT/SAE-Projet_d_application_repartie" style="color: #000;">Lien vers le dépôt Git</a></p>
+        <p>L'intégralité du code source est accessible sur notre dépôt : <a
+                href="#https://github.com/EmilienBDT/SAE-Projet_d_application_repartie" style="color: #000;">Lien vers
+                le dépôt Git</a></p>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -59,24 +68,25 @@
     <script>
         function openTab(evt, tabName) {
             let i, tabcontent, tablinks;
-            
+
             tabcontent = document.getElementsByClassName("tabcontent");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
             }
-            
+
             tablinks = document.getElementsByClassName("tablinks");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
-            
+
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
-            
-            if(tabName === 'map-tab') {
+
+            if (tabName === 'map-tab') {
                 setTimeout(() => { map.invalidateSize(); }, 100);
             }
         }
     </script>
 </body>
+
 </html>
