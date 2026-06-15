@@ -9,10 +9,22 @@ import java.io.OutputStream;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+/**
+ * Handler chargé de traiter les requêtes demandant la liste des restaurants.
+ * Il interroge le registre RMI pour récupérer ces informations depuis le service backend.
+*/
+
 public class RestaurantHandler implements HttpHandler {
     private static final String RMI_HOST = ConfigLoader.get("rmi.server.ip");
     private static final int RMI_PORT = Integer.parseInt(ConfigLoader.get("rmi.registry.port"));
 
+
+    /**
+     * Traite la requête HTTP entrante 
+     * 
+     * @param exchange L'objet encapsulant la requête HTTP reçue et la réponse à envoyer
+     * @throws IOException Si une erreur d'entrée/sortie survient
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");

@@ -5,7 +5,19 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+
+/**
+ * Classe principale, responsable du démarrage du serveur HTTP (Proxy).
+ */
+
 public class ProxyServer {
+    
+    /**
+     * Initialise le serveur sur le port spécifié dans la configuration et 
+     * attache les différents Handlers.
+     *
+     * @param args 
+     */
     public static void main(String[] args) {
         try {
             int port = Integer.parseInt(ConfigLoader.get("proxy.port"));

@@ -1,0 +1,44 @@
+@startuml
+skinparam maxMessageSize 150
+skinparam backgroundColor white
+autonumber
+
+actor "Utilisateur" as User
+participant "app.js (Navigateur)" as Frontend
+participant "ProxyServer\n(ReservationHandler)" as Proxy
+participant "RMIServer\n(RestaurantServiceImpl)" as RMI
+database "Base de Données" as DB
+
+User -> Frontend : Clique sur "Confirmer" (Réservation)
+activate Frontend
+
+Frontend -> Proxy : POST /api/reserver\n{ id, nom, prenom, convives... }
+activate Proxy
+
+note right of Proxy: Gestion du CORS et\nlecture du payload JSON
+
+Proxy -> RMI : reserverTable(id, nom, prenom, nbConvives, tel)
+activate RMI
+
+RMI -> DB : DatabaseManager.getConnection()
+activate DB
+DB --> RMI : Connection SQL
+deactivate DB
+
+RMI -> DB : PreparedStatement.executeUpdate()\nINSERT INTO reservations...
+activate DB
+DB --> RMI : rows affected (1)
+deactivate DB
+
+note right of RMI: Construction de la\nréponse JSON
+
+RMI --> Proxy : "{\"status\": \"success\", \"message\": \"...\"}"
+deactivate RMI
+
+Proxy --> Frontend : HTTP 200 OK\nJSON Response
+deactivate Proxy
+
+Frontend -> User : Affiche le message de succès en vert
+deactivate Frontend
+
+@enduml

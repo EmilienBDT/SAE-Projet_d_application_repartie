@@ -1,0 +1,49 @@
+@startuml
+skinparam componentStyle uml2
+skinparam backgroundColor white
+
+package "Navigateur" {
+    component "Client Web (HTML / JS)" as WebClient <<Leaflet>>
+}
+
+node "Serveur Java (Passerelle)" {
+    package "Module : http-proxy" {
+        component "ProxyServer" as Proxy
+        component "RestaurantHandler" as RestHandler
+        component "ReservationHandler" as ResHandler
+        component "IncidentHandler" as IncHandler
+        
+        Proxy --> IncHandler
+        Proxy --> RestHandler 
+        Proxy --> ResHandler 
+    }
+}
+
+node "Serveur Java (Traitement de la BD)" {
+    package "Module : rmi-service" {
+        component "RMIServer" as RMI
+        component "RestaurantServiceImpl" as ServiceImpl
+        component "DatabaseManager" as DBManager
+        
+        RMI --> ServiceImpl : Expose
+        ServiceImpl --> DBManager : Connexion SQL
+    }
+}
+
+database "Base de Données Restaurants" as DB
+
+cloud "API Open Data" {
+    component "Cyclocity (Vélos)" as API_Velos
+    component "API Grand Nancy (Incidents)" as API_Incidents
+}
+
+' Relations 
+WebClient .down.> Proxy : Requêtes HTTP/JSON
+WebClient .down.> API_Velos : Requêtes HTTP Directes
+
+IncHandler .right.> API_Incidents : HTTP GET
+RestHandler .down.> ServiceImpl : RMI 
+ResHandler .down.> ServiceImpl : RMI 
+
+DBManager .down.> DB : JDBC
+@enduml

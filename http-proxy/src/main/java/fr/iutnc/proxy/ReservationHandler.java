@@ -13,10 +13,24 @@ import java.nio.charset.StandardCharsets;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+
+/**
+ * Handler chargé de traiter les requêtes de réservation.
+ * Il réceptionne les données JSON envoyées en POST par le client, les parse,
+ * et transmet la demande au service distant via RMI.
+ */
+
 public class ReservationHandler implements HttpHandler {
     private static final String RMI_HOST = ConfigLoader.get("rmi.server.ip");
     private static final int RMI_PORT = Integer.parseInt(ConfigLoader.get("rmi.registry.port"));
 
+
+    /**
+     * Traite la requête HTTP entrante
+     *
+     * @param exchange L'objet encapsulant la requête HTTP reçue et la réponse à envoyer
+     * @throws IOException Si une erreur d'entrée/sortie survient
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         // Configuration CORS pour autoriser les requêtes POST depuis webetu

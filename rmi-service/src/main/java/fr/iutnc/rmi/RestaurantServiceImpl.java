@@ -9,12 +9,27 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * Implémentation du service distant {@link RestaurantService}.
+ * Cette classe exécute les requêtes SQL vers la base de données 
+ * et formate les résultats en JSON avant de les renvoyer au client RMI.
+ */
 public class RestaurantServiceImpl extends UnicastRemoteObject implements RestaurantService {
 
+    /**
+     * Constructeur par défaut.
+     * Exporte l'objet pour le rendre disponible aux appels RMI.
+     *
+     * @throws RemoteException Si l'exportation de l'objet distant échoue
+     */
     public RestaurantServiceImpl() throws RemoteException {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     * Interroge la table {@code restaurants} de la base de données
+     */
     @Override
     public String getRestaurants() throws RemoteException {
         JSONArray jsonArray = new JSONArray();
@@ -44,6 +59,10 @@ public class RestaurantServiceImpl extends UnicastRemoteObject implements Restau
         return jsonArray.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     * Insère une nouvelle entrée dans la table {@code reservations}
+     */
     @Override
     public String reserverTable(int restaurantId, String nom, String prenom, int nbConvives, String telephone)
             throws RemoteException {

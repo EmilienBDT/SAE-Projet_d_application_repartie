@@ -3,7 +3,20 @@ package fr.iutnc.rmi;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+/**
+ * Classe de test permettant de vérifier le bon fonctionnement
+ * du serveur RMI et l'accès à la base de données, sans avoir besoin
+ * de lancer le proxy HTTP ou l'interface web.
+ */
+
 public class RMIClientTest {
+    /**
+     * Point d'entrée de l'application de test.
+     * Se connecte au registre RMI, récupère le service 
+     * via son nom public, puis invoque les méthodes de test pour l'affichage et la réservation.
+     *
+     * @param args 
+     */
     public static void main(String[] args) {
         try {
             int port = Integer.parseInt(ConfigLoader.get("rmi.registry.port"));

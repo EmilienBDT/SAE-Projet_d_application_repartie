@@ -12,10 +12,20 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+/*
+ * Classe utilitaire permettant de récupérer et de tester le traitement
+ * des données depuis une API distante en gérant la configuration d'un proxy.
+ */
 public class DataFetcher {
 
     private static final String API_URL = ConfigLoader.get("api.url");
 
+    /*
+     * Exécute une requête GET vers l'API configurée pour récupérer les données.
+     * Si la propriété système {@code useProxy} est définie à "true", un proxy
+     * spécifique à l'IUT est appliqué à la connexion.
+     * Parse ensuite le résultat JSON pour afficher la description des incidents.
+     */
     public static void fetchDonnees() {
         // Configuration du proxy
         ProxySelector proxyIut = ProxySelector.of(new InetSocketAddress("www-cache", 3128));
@@ -77,7 +87,9 @@ public class DataFetcher {
         }
     }
 
-    // Méthode main pour tester la classe
+    /*
+     * Méthode main pour tester la classe
+     */
     public static void main(String[] args) {
         fetchDonnees();
     }

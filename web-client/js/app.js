@@ -1,13 +1,17 @@
-// Initialisation de la carte [Latitude, Longitude]
+
+/**
+ * Initialisation de la carte Leaflet [Latitude, Longitude]
+ * La carte est centrée sur Nancy.
+ */
 const map = L.map('map', { zoomControl: false }).setView([48.6921, 6.1844], 14);
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-// Ajout du fond de carte OpenStreetMap
+/**  Ajout du fond de carte OpenStreetMap */
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// État global de l'application
+/** @type {Object} État de l'application stockant les données brutes et les filtres */
 const state = {
     filter: null,
     search: '',
@@ -18,25 +22,30 @@ const state = {
     }
 };
 
-// Couches Leaflet par catégorie
+/** @type {Object} Layers Leaflet pour gérer l'affichage des marqueurs */
 const layers = {
     restaurants: L.layerGroup().addTo(map),
     velos: L.layerGroup().addTo(map),
     incidents: L.layerGroup().addTo(map)
 };
 
-// Définition des icônes
+/** @type {Object} Configuration des icônes pour chaque type d'élément */
 const icons = {
     incident: L.icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34] }),
     restaurant: L.icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34] }),
     velo: L.icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34] })
 };
 
-// Fonction principale de rendu
+/**
+ * Fonction principale de rendu.
+ * Met à jour l'interface utilisateur et les marqueurs sur la carte 
+ * en fonction des filtres actifs et de la recherche textuelle.
+ */
 function render() {
     const resultsBox = document.getElementById('results-box');
     resultsBox.innerHTML = '';
 
+    // Nettoyage des couches existantes
     layers.restaurants.clearLayers();
     layers.velos.clearLayers();
     layers.incidents.clearLayers();
@@ -56,6 +65,7 @@ function render() {
                 resultatsTrouves++;
 
                 const marker = L.marker([resto.coordonnees.lat, resto.coordonnees.lng], { icon: icons.restaurant });
+                // HTML du popup de réservation
                 const formHTML = `
                     <div id="view_${resto.id}" class="popup-station">
                         <h3>${resto.nom}</h3>
@@ -163,7 +173,10 @@ function render() {
     }
 }
 
-// Actions UI
+/**
+ * Alterne le filtre actif par catégorie
+ * @param {string|null} category La catégorie à filtrer (restaurants, velos, incidents)
+ */
 window.toggleFilter = function (category) {
     if (state.filter === category) {
         state.filter = null;
@@ -179,11 +192,21 @@ window.toggleFilter = function (category) {
     render();
 };
 
+/**
+ * Met à jour la recherche textuelle lors de la saisie
+ * @param {Event} event Événement de saisie clavier
+ */
 window.handleSearch = function (event) {
     state.search = event.target.value;
     render();
 };
 
+/**
+ * Centre la carte sur un marqueur spécifique et ouvre son popup.
+ * @param {number} lat Latitude
+ * @param {number} lng Longitude
+ * @param {string} layerName Nom de la couche concernée
+ */
 window.focusOnMap = function (lat, lng, layerName) {
     map.setView([lat, lng], 16);
     layers[layerName].eachLayer(function (marker) {
@@ -207,7 +230,9 @@ window.focusOnMap = function (lat, lng, layerName) {
     });
 };
 
-// Actions API
+/**
+ * Récupère les données des stations de vélos (Info + Status) via l'API.
+ */
 async function chargerStations() {
     try {
         const [reponseInfo, reponseStatus] = await Promise.all([
@@ -232,6 +257,9 @@ async function chargerStations() {
     } catch (erreur) { console.error("Erreur Vélibs :", erreur); }
 }
 
+/**
+ * Récupère la liste des incidents via le Proxy Java
+ */
 async function chargerIncidents() {
     try {
         const reponse = await fetch(`${CONFIG.PROXY_URL}/incidents`);
@@ -250,6 +278,9 @@ async function chargerIncidents() {
     } catch (erreur) { console.error("Erreur Waze :", erreur); }
 }
 
+/**
+ * Récupère la liste des restaurants via le Proxy Java
+ */
 async function chargerRestaurants() {
     try {
         const reponse = await fetch(`${CONFIG.PROXY_URL}/restaurants`);
@@ -258,6 +289,10 @@ async function chargerRestaurants() {
     } catch (erreur) { console.error("Erreur Restaurants :", erreur); }
 }
 
+/**
+ * Envoie une requête de réservation au serveur via le Proxy.
+ * @param {number} id ID du restaurant
+ */
 async function reserver(id) {
     const nbConvives = parseInt(document.getElementById(`convives_${id}`).value);
 

@@ -12,9 +12,20 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+/**
+ * Handler chargé de traiter les requêtes vers les incidents.
+ * Il agit comme un proxy en interrogeant l'API distante et en renvoyant sa réponse
+ * au client web, évite les erreurs de type OpaqueResponseBlocking/CORS.
+ */
 public class IncidentHandler implements HttpHandler {
     private static final String API_URL = ConfigLoader.get("api.url");
 
+    /**
+     * Traite la requête HTTP
+     *
+     * @param exchange L'objet encapsulant la requête HTTP et la réponse à envoyer
+     * @throws IOException Si une erreur d'entrée/sortie survient lors de l'écriture de la réponse.
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
