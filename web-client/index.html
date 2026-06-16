@@ -35,31 +35,35 @@
         </div>
         <div id="map"></div>
     </div>
-    <!-- Contrendu -->
+    <!-- Compte rendu -->
     <div id="compte-rendu" class="tabcontent" style="display:none;">
         <h2>1. Architecture de l'application</h2>
-        <div class="schema-container">
-            <p style="color: #999;">[Insérer l'image du schéma d'architecture ici]</p>
+        <div class="schema-container" style="background: transparent; border: none; padding: 10px 0;">
+            <h3 style="margin-bottom: 15px; font-weight: 500; text-align: left;">Diagramme des Composants</h3>
+            <img src="image/Composantsduprojet.png" alt="Schéma de l'architecture des composants" style="width: 100vh; display: block; margin: auto;">
+            
+            <h3 style="margin-bottom: 15px; font-weight: 500; text-align: left;">Diagramme de Séquence (Réservation)</h3>
+            <img src="image/SéquencedeBD.png" alt="Schéma de séquence d'une réservation" style="width: 100vh; display: block; margin: auto;">
         </div>
 
         <h2>2. Travail réalisé</h2>
         <ul>
-            <li>Création de la carte Leaflet et affichage des station velib à l'aide de l'api cyclocity</li>
-            <li>Implémentation de la base de données Oracle sur webetu</li>
+            <li>Création de la carte Leaflet et affichage des stations Vélib à l'aide de l'API Cyclocity.</li>
+            <li>Implémentation de la base de données Oracle sur le serveur Charlemagne.</li>
             <li>Conception du service RMI Java exposant les données de restauration au format JSON.</li>
-            <li>Mise en place d'un Proxy HTTP agissant comme passerelle réseau et résolvant les politiques CORS du
-                navigateur pour l'API Waze.</li>
+            <li>Mise en place d'un Proxy HTTP agissant comme passerelle réseau et résolvant les politiques CORS du navigateur pour l'API Waze.</li>
             <li>Développement de l'interface client Leaflet intégrant de manière asynchrone les flux de données.</li>
         </ul>
 
         <h2>3. Déploiement et Exécution</h2>
-        <p>Les instructions détaillées de compilation (Maven / JDK) et d'exécution sur les environnements Windows et
-            Ubuntu sont documentées dans le fichier README du projet.</p>
+        <p>Les instructions détaillées de compilation (Maven / JDK) et d'exécution sur les environnements Windows et Ubuntu sont documentées dans le fichier README du projet.</p>
 
         <h2>4. Code Source</h2>
-        <p>L'intégralité du code source est accessible sur notre dépôt : <a
-                href="#https://github.com/EmilienBDT/SAE-Projet_d_application_repartie" style="color: #000;">Lien vers
-                le dépôt Git</a></p>
+        <p>L'intégralité du code source est accessible sur notre dépôt : <a href="https://github.com/EmilienBDT/SAE-Projet_d_application_repartie" target="_blank" style="color: #2A81CB; text-decoration: none; font-weight: bold;">Lien vers le dépôt Git</a></p>
+
+        <h2>5. Sécurité et gestion du CORS</h2>
+        <p><strong>Est-ce responsable d'ainsi contourner la politique de sécurité du navigateur ?</strong></p>
+        <p>Oui, dans le cadre du pattern d'architecture <em>Backend-For-Frontend</em>, cette approche est totalement responsable. La politique CORS (Cross-Origin Resource Sharing) est une sécurité stricte côté client (le navigateur) empêchant un script d'interroger un domaine tiers non autorisé. En utilisant notre Proxy HTTP Java comme intermédiaire, c'est notre serveur qui interroge l'API Waze, et non le navigateur. Les requêtes serveur à serveur n'étant pas soumises au CORS, la donnée est récupérée légitimement puis retransmise à notre interface Web. Cela permet de centraliser, contrôler et sécuriser les échanges réseau sans exposer directement la logique applicative au client.</p>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
