@@ -4,18 +4,24 @@ skinparam backgroundColor white
 autonumber
 
 actor "Utilisateur" as User
-participant "app.js (Navigateur)" as Frontend
+participant "app.js\n(Navigateur)" as Frontend
 participant "ProxyServer\n(ReservationHandler)" as Proxy
+participant "LocateRegistry\n(Port 1099)" as Registry
 participant "RMIServer\n(RestaurantServiceImpl)" as RMI
-database "Base de Données" as DB
+database "Oracle DB\n(Charlemagne)" as DB
 
-User -> Frontend : Clique sur "Confirmer" (Réservation)
+User -> Frontend : Clique sur "Confirmer"
 activate Frontend
 
 Frontend -> Proxy : POST /api/reserver\n{ id, nom, prenom, convives... }
 activate Proxy
 
 note right of Proxy: Gestion du CORS et\nlecture du payload JSON
+
+Proxy -> Registry : lookup("RestaurantService")
+activate Registry
+Registry --> Proxy : Référence du ServiceImpl
+deactivate Registry
 
 Proxy -> RMI : reserverTable(id, nom, prenom, nbConvives, tel)
 activate RMI

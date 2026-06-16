@@ -2,11 +2,11 @@
 skinparam componentStyle uml2
 skinparam backgroundColor white
 
-package "Navigateur" {
+package "Client web" {
     component "Client Web (HTML / JS)" as WebClient <<Leaflet>>
 }
 
-node "Serveur Java (Passerelle)" {
+node "Service Proxy (Passerelle)" {
     package "Module : http-proxy" {
         component "ProxyServer" as Proxy
         component "RestaurantHandler" as RestHandler
@@ -19,7 +19,7 @@ node "Serveur Java (Passerelle)" {
     }
 }
 
-node "Serveur Java (Traitement de la BD)" {
+node "Service RMI (Connexion à la BD)" {
     package "Module : rmi-service" {
         component "RMIServer" as RMI
         component "RestaurantServiceImpl" as ServiceImpl
